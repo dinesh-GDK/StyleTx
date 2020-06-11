@@ -1,0 +1,10 @@
+setup.py
+aicon/README.md
+aicon/StyleTransfer.py
+aicon/__init__.py
+aicon/process.py
+aicon.egg-info/PKG-INFO
+aicon.egg-info/SOURCES.txt
+aicon.egg-info/dependency_links.txt
+aicon.egg-info/not-zip-safe
+aicon.egg-info/top_level.txt
