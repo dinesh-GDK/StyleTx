@@ -53,7 +53,7 @@ By default alpha = 1, beta = 10 and epochs = 500.
 You can play around these values to get desired output image.
 
 ### Example
-![alt text](https://github.com/dinesh-GDK/aicon/blob/master/aicon/images/Result.png)
+![alt text](https://github.com/dinesh-GDK/aicon/blob/master/images/Result.png)
 
 ### References
 The complete theory behind the **StyleTransfer** can be found in this [link](https://www.cv-foundation.org/openaccess/content_cvpr_2016/papers/Gatys_Image_Style_Transfer_CVPR_2016_paper.pdf).
