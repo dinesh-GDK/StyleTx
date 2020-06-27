@@ -1,2 +1,0 @@
-acknowledgemet to Udacity course 'Intro to Deep Learning with PyTorch' for giving valuable insight
-'
