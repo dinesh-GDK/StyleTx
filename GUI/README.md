@@ -5,7 +5,7 @@ This is the GUI version of the **StyleTx** python package.
 ## Installation
 You can clone this repository and run the `main.py` file in the terminal to open the GUI.
 
-`git clone `
+`git clone https://github.com/dinesh-GDK/StyleTx.git`
 
 ## Requirements
 Python3

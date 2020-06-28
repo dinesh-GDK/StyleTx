@@ -1,4 +1,4 @@
-from styletx import StyleTransfer
+import styletx
 import PIL
 import matplotlib.pyplot as plt
 
@@ -8,6 +8,6 @@ style = PIL.Image.open("E:\Projects\images\Mona_Lisa.jpg")
 content.show()
 style.show()
 
-output = StyleTransfer(content, style, epochs=2)
+output = styletx.StyleTransfer(content, style, epochs=2)
 
 output.show()

@@ -1,33 +1,34 @@
 Metadata-Version: 2.1
 Name: styletx
-Version: 1.0.1.1
-Summary: Initial release with only Style Transfer
+Version: 1.0.3
+Summary: Initial release with StyleTransfer
 Home-page: UNKNOWN
 Author: Dinesh Kumar Gnanasekaran
 Author-email: dinesh.gna111@gmail.com
-License: UNKNOWN
+License: MIT
 Description: # styletx
-        **styletx** is a python package that applies effects to an image using machine learning.
+        **styletx** is a python package that applies effects of an image to another image using machine learning.
         
         ## Installation
-        You can install the styletx package using the commands given below
+        You can install the styletx package using the command given below
         
         `pip install styletx`
         
+        ## Requirements
+        Python3
+        
         **styletx** depends on the following python packages
         ```
-        PyTorch
-        numpy
-        matplotlib
-        PIL
-        tqdm
+        torch==1.5.0
+        torchvision==0.6.0
+        numpy==1.19.0
+        pillow==7.1.2
+        tqdm==4.46.1
         ```
-        Also, using GPU will significantly reduce the run time of the script. Make sure to get PyTorch version that supports GPU.
+        All the requirements stated above are used in creating the project, lower versions of the requirements may or may not work.\
+        Also, using GPU will significantly reduce the run time of the script. Make sure to get `torch` and `torchvision` version that supports GPU.
         
-        ## StyleTransfer
-        **StyleTransfer** is a function in **styletx** that takes two images namely style image and content image, and applies the effects in style image and applies it to the content image.
-        
-        ### Implementation
+        ## Implementation
         
         ```
         # import necessary packages
@@ -48,26 +49,23 @@ Description: # styletx
         ax2.imshow(output_image)
         plt.show()
         ```
-        The above code will apply the effects of the style image to content image.
+        The above code will apply the effects of the `style_image` to `content_image`.
         
-        ### Inputs
-        content_image - a PIL object\
-        style_image - a PIL object\
-        alpha - a positive integer\
-        beta - a positive integer\
-        epochs - a positive integer
+        ## Inputs
+        `content_image` - a PIL object\
+        `style_image` - a PIL object\
+        `alpha` - a positive integer\
+        `beta` - a positive integer\
+        `epochs` - a positive integer
         
-        By default alpha = 1, beta = 10 and epochs = 500.
+        By default `alpha` = 1, `beta` = 10 and `epochs` = 500.
         You can play around these values to get desired output image.
         
-        ### Example
-        ![alt text](info/../styletx/info/Result.png)
+        ## Example
+        ![](https://raw.githubusercontent.com/dinesh-GDK/StyleTx/master/images/Result.png)
         
-        ### References
+        ## References
         The complete theory behind the **StyleTransfer** can be found in this [link](https://www.cv-foundation.org/openaccess/content_cvpr_2016/papers/Gatys_Image_Style_Transfer_CVPR_2016_paper.pdf).
-        
-        ## License
-        [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](info/../styletx/info/LICENSE.txt)
         
 Platform: UNKNOWN
 Description-Content-Type: text/markdown

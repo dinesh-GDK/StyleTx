@@ -1,4 +1,5 @@
 README.md
+README_pypi.md
 setup.py
 styletx/StyleTransfer.py
 styletx/__init__.py
