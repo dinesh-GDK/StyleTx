@@ -61,3 +61,6 @@ The complete theory behind the **StyleTransfer** can be found in this [link](htt
 
 ## License
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](info/../styletx/info/LICENSE.txt)
+
+## Resources
+https://github.com/udacity/deep-learning-v2-pytorch/tree/master/style-transfer

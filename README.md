@@ -1,6 +1,10 @@
 # StyleTx
 **StyleTx** is a project in python that applies effects of one image to another using machine learning.
 
+You can use **StyleTx** by 
+- [Python pip package](https://github.com/dinesh-GDK/StyleTx/tree/master/Python%20package)
+- [GUI version](https://github.com/dinesh-GDK/StyleTx/tree/master/GUI)
+
 ## Example
 ![alt text](https://github.com/dinesh-GDK/StyleTx/blob/master/images/Result.png)
 

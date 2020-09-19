@@ -3,7 +3,7 @@
 This is the GUI version of the **StyleTx** python package.
 
 ## Installation
-You can clone this repository and run the `main.py` file in the terminal to open the GUI.
+You can clone this repository and run the `main.py` file which is inside the folder `GUI`, in the terminal to open the GUI.
 
 `git clone https://github.com/dinesh-GDK/StyleTx.git`
 
@@ -23,7 +23,7 @@ Also, using GPU will significantly reduce the run time of the script. Make sure 
 
 ## Implementation
 
-Once you open the `main.py` file in the terminal, upload the **content** and **style** images and generate the **output** image. You can change the parameters using the **Advanced Settings** options. You can preview and save your images.
+Open the `main.py` file which is inside the folder `GUI`, in the terminal, upload the **content** and **style** images and generate the **output** image. You can change the parameters using the **Advanced Settings** options. You can preview and save your images.
 
 ## Example
 ![alt text](https://github.com/dinesh-GDK/StyleTx/blob/master/images/Result.png)
@@ -33,3 +33,6 @@ The complete theory behind the **StyleTransfer** can be found in this [link](htt
 
 ## License
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/dinesh-GDK/StyleTx/blob/master/LICENSE.txt)
+
+## Resources
+https://github.com/udacity/deep-learning-v2-pytorch/tree/master/style-transfer
