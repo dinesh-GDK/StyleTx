@@ -64,8 +64,15 @@ The GUI is intuitive to follow and you can generate your image.
 By default `alpha` = 1, `beta` = 10 and `epochs` = 500.
 You can play around these values to get desired output image.
 
+You can use **StyleTx** by 
+- [Python pip package](https://github.com/dinesh-GDK/StyleTx/tree/master/Python%20package)
+- [GUI version](https://github.com/dinesh-GDK/StyleTx/tree/master/GUI)
+
 ## Example
 ![](https://raw.githubusercontent.com/dinesh-GDK/StyleTx/master/images/Result.png)
+
+## License
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/dinesh-GDK/StyleTx/blob/master/LICENSE.txt)
 
 ## Resources
 - The complete theory behind the **StyleTransfer** can be found in this [link](https://www.cv-foundation.org/openaccess/content_cvpr_2016/papers/Gatys_Image_Style_Transfer_CVPR_2016_paper.pdf).
