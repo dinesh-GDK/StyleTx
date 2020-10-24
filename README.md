@@ -64,10 +64,6 @@ The GUI is intuitive to follow and you can generate your image.
 By default `alpha` = 1, `beta` = 10 and `epochs` = 500.
 You can play around these values to get desired output image.
 
-You can use **StyleTx** by 
-- [Python pip package](https://github.com/dinesh-GDK/StyleTx/tree/master/Python%20package)
-- [GUI version](https://github.com/dinesh-GDK/StyleTx/tree/master/GUI)
-
 ## Example
 ![](https://raw.githubusercontent.com/dinesh-GDK/StyleTx/master/images/Result.png)
 
