@@ -10,7 +10,7 @@ Required packages are specified in [requirements.txt](https://github.com/dinesh-
 pip3 install -r requirements.txt
 ```
 
-`torch` and `torchvision` versions in `requirements.txt` are CPU only, if ypu want to use the GPU versions that suit your hardware requirements visit this [link](https://pytorch.org/).
+`torch` and `torchvision` versions in `requirements.txt` are CPU only, if you want to use the GPU versions that suit your hardware requirements visit this [link](https://pytorch.org/).
 
 # pip Package
 ## Installation
