@@ -6,6 +6,8 @@ from functools import partial
 
 from StyleTransfer import *
 
+universal = {'color_back': '#87C7B9', 'color_btn': '#34A88E', 'icon_path': './images/icon.ico'}
+
 class Frame(tk.Tk):
     '''Wrapper GUI for Style Transfer(StyleTx)'''
 
@@ -16,9 +18,9 @@ class Frame(tk.Tk):
         self.resizable(0, 0)
         self.title('StyleTx')
         self.geometry('520x250')
-        self.iconbitmap('./images/icon.ico')
-        self.color_txt = '#d2a2ff'
-        self.color_but = '#bf7cff'
+        self.iconbitmap(universal['icon_path'])
+        self.color_txt = universal['color_back']
+        self.color_but = universal['color_btn']
         self['background'] = self.color_txt 
 
         # files types used
@@ -152,7 +154,7 @@ class Frame(tk.Tk):
             return None
 
         try:
-            self.image_output = StyleTransfer(self.image_content, self.image_style, self.alpha, self.beta, self.epochs)
+            self.image_output = StyleTransfer(self.image_content, self.image_style, universal, self.alpha, self.beta, self.epochs)
         except:
             None                                                # if process breaks due to interrupt button
 
@@ -169,7 +171,7 @@ class Frame(tk.Tk):
             self.exceptionFrame()
             return None
         
-        filename = tk.filedialog.asksaveasfile(mode='w', defaultextension=".png", filetypes=self.ftypes)
+        filename = tk.filedialog.asksaveasfile(mode='w', defaultextension='.png', filetypes=self.ftypes)
 
         # if user closes the save as window without saving the image
         try:

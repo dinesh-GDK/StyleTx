@@ -7,15 +7,16 @@ import process
 import tkinter as tk
 from tkinter import ttk
 
-def StyleTransfer(content_img, style_img, alpha=1, beta=10, epochs=500):
+def StyleTransfer(content_img, style_img, universal, alpha=1, beta=10, epochs=500):
     ''' Transfers the style of the image given by the user
     INPUT:
         content_img - the image for which the style transfer is to be applied (type: PIL)
         style_img - the image whose style is to be transfered to content_img (type: PIL)
+        universal - info of background & button colours and icon path (type: dictionary)
         alpha - weight of the content info used in the error function (type: positive int)
         beta -  weigth of the style info used in the error function (type: positive int)
         epochs - number of iterations to be done (type: positive int)
-        checkpoint - display the intermediate result for every checkpoint (type: positive int)
+        checkpoint - display the intermediate result for every checkpoint (type: positive int
     OUTPUT:
         target_img - style transfered image (type: PIL)
     '''
@@ -26,9 +27,9 @@ def StyleTransfer(content_img, style_img, alpha=1, beta=10, epochs=500):
     # creating window to display progress bar
     mini_frame = tk.Tk()
     mini_frame.geometry('300x150')
-    mini_frame.iconbitmap('icon.ico')
-    color_txt = '#d2a2ff'
-    color_but = '#bf7cff'
+    mini_frame.iconbitmap(universal['icon_path'])
+    color_txt = universal['color_back']
+    color_but = universal['color_btn']
     mini_frame['background'] = color_txt    
     mini_frame.protocol('WM_DELETE_WINDOW', process.nClose)
     mini_frame.resizable(0,0)
