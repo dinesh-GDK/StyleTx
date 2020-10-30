@@ -62,7 +62,7 @@ The GUI is intuitive to follow and you can generate your image.
 `epochs` - a positive integer
 
 By default `alpha` = 1, `beta` = 10 and `epochs` = 500.
-You can play around these values to get desired output image.
+You can play with these values to get desired output image.
 
 ## Example
 ![](https://raw.githubusercontent.com/dinesh-GDK/StyleTx/master/images/Result.png)
