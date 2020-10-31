@@ -43,6 +43,16 @@ plt.show()
 ```
 The above code will apply the effects of the `style_image` to `content_image`.
 
+## Inputs
+`content_image` - a PIL object\
+`style_image` - a PIL object\
+`alpha` - a positive integer\
+`beta` - a positive integer\
+`epochs` - a positive integer
+
+By default `alpha` = 1, `beta` = 10 and `epochs` = 500.
+You can play with these values to get desired output image.
+
 # GUI
 To use GUI version of **StyleTx**, just clone the repository using
 ```
@@ -54,17 +64,7 @@ python3 main.py
 ```
 The GUI is intuitive to follow and you can generate your image.
 
-# Inputs
-`content_image` - a PIL object\
-`style_image` - a PIL object\
-`alpha` - a positive integer\
-`beta` - a positive integer\
-`epochs` - a positive integer
-
-By default `alpha` = 1, `beta` = 10 and `epochs` = 500.
-You can play with these values to get desired output image.
-
-## Example
+# Example
 ![](https://raw.githubusercontent.com/dinesh-GDK/StyleTx/master/images/Result.png)
 
 ## License
