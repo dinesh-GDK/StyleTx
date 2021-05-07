@@ -26,14 +26,14 @@ pip3 install styletx
 # import necessary packages
 from styletx import StyleTransfer
 from PIL import Image
-import matlibplot.pyplot as plt
+import matplotlib.pyplot as plt
 
 # import the images
 content_image = Image.open('path/filename')
 style_image = Image.open('path/filename')
 
 # implement StyleTransfer
-output_image = StyleTransfer(content_image, style_image, alpha=1, beta=10, epochs=500)
+output_image = StyleTransfer(content_image, style_image, alpha=1, beta=10, epochs=5)
 
 # display the results
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(20, 10))
