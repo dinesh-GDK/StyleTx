@@ -36,7 +36,7 @@ def StyleTransfer(content_img, style_img, universal, alpha=1, beta=10, epochs=50
     mini_frame.title('Progress')
 
     # dsplay the training device 
-    tk.Label(mini_frame, text='Training in '+ str(device) +'...', font='Arial', bg = color_txt).place(x = 10, y = 5)
+    tk.Label(mini_frame, text='Executing in '+ str(device) +'...', font='Arial', bg = color_txt).place(x = 10, y = 5)
 
     # initial epochs count(0/epochs)
     tk.Label(mini_frame, text='Epochs {}/{} completed...'.format(0, epochs), font = 'Arial', bg = color_txt).place(x = 10, y = 30)
