@@ -50,7 +50,7 @@ The above code will apply the effects of the `style_image` to `content_image`.
 `beta` - a positive integer\
 `epochs` - a positive integer
 
-By default `alpha` = 1, `beta` = 10 and `epochs` = 500.\
+By default `alpha` = 1, `beta` = 10 and `epochs` = 10.\
 High `alpha` value implies that the content image will have more influence on the output image.\
 High `beta` value implies that the style image will have more influence on the output image.\
 You can play with these values to get desired output image.

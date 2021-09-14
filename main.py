@@ -6,8 +6,7 @@ from functools import partial
 
 from StyleTransfer import *
 
-universal = {'color_back': '#87C7B9', 'color_btn': '#34A88E', 'icon_path': './images/icon.ico'}
-
+universal = {'color_back': '#87C7B9', 'color_btn': '#34A88E'}
 class Frame(tk.Tk):
     '''Wrapper GUI for Style Transfer(StyleTx)'''
 
@@ -18,7 +17,6 @@ class Frame(tk.Tk):
         self.resizable(0, 0)
         self.title('StyleTx')
         self.geometry('520x250')
-        self.iconbitmap(universal['icon_path'])
         self.color_txt = universal['color_back']
         self.color_but = universal['color_btn']
         self['background'] = self.color_txt 
@@ -71,7 +69,7 @@ class Frame(tk.Tk):
         self.button_save_output.place(x = 325, y = 150, height = 30, width = 100)
 
         self.button_settings = tk.Button(self, text='Adavnced Settings', bg = self.color_but, command = self.advancedSettings)
-        self.button_settings.place(x = 190, y = 200, height = 30, width = 120)
+        self.button_settings.place(x = 190, y = 200, height = 30, width = 140)
 
     def upload(self, var):
         '''Upload the files and load it in corresponding variable
@@ -131,7 +129,6 @@ class Frame(tk.Tk):
         panel = tk.Label(self.mini_frame, image=img)
         panel.image = img
         panel.pack()
-        self.mini_frame.iconbitmap('./images/icon.ico')
 
     def styleTransfer(self):
         '''Implement the StyleTransfer function'''
@@ -188,7 +185,6 @@ class Frame(tk.Tk):
         self.settings_frame['background'] = self.color_txt
         self.settings_frame.resizable(0, 0)
         self.settings_frame.title('Advanced Settings')
-        self.settings_frame.iconbitmap('./images/icon.ico')
 
         # text in Advanced Settings window
         tk.Label(self.settings_frame, text='alpha', font='15', bg = self.color_txt).place(x = 50, y = 10)
@@ -247,7 +243,6 @@ class Frame(tk.Tk):
         self.mini_frame['background'] = self.color_txt
         self.mini_frame.resizable(0,0)
         self.mini_frame.title('ERROR')
-        self.mini_frame.iconbitmap('./images/icon.ico')
         error = tk.Label(self.mini_frame, text = self.error_msg, font = '15', bg = self.color_txt)
         error.place(x=10, y=0)
 

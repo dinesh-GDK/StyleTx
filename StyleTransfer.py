@@ -27,7 +27,6 @@ def StyleTransfer(content_img, style_img, universal, alpha=1, beta=10, epochs=50
     # creating window to display progress bar
     mini_frame = tk.Tk()
     mini_frame.geometry('300x150')
-    mini_frame.iconbitmap(universal['icon_path'])
     color_txt = universal['color_back']
     color_but = universal['color_btn']
     mini_frame['background'] = color_txt    
