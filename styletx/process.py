@@ -1,5 +1,9 @@
-import torch
+'''
+All necessary functions
+'''
+
 import numpy as np
+import torch
 from torchvision import transforms
 
 def pre_process(image, max_size=500, shape=None):
@@ -23,15 +27,18 @@ def pre_process(image, max_size=500, shape=None):
     
     if shape is not None:
         size = shape
-        
-    mean = np.array(image).mean(axis=(0, 1))/255   # calculate the mean of the image for R, G and B
-    var = np.array(image).std(axis=(0, 1))/255     #calculate the variance of the image for R, G and B
+    
+    # calculate the mean of the image for R, G and B
+    mean = np.array(image).mean(axis=(0, 1))/255
+
+    # calculate the variance of the image for R, G and B
+    var = np.array(image).std(axis=(0, 1))/255
 
     # Resize, convert to tensor and normalize the image    
     transform = transforms.Compose([transforms.Resize(size),
                                     transforms.ToTensor(),
                                     transforms.Normalize(tuple(mean), tuple(var))])
-    image = transform(image)[:3,:,:].unsqueeze(0)
+    image = transform(image)[:3, :, :].unsqueeze(0)
 
     return image, mean, var
 
@@ -46,11 +53,15 @@ def denorm_tensor(tensor_image, mean, var):
         image - returns the denormalized image (type : numpy array)
     '''
     
-    image = tensor_image.to("cpu").clone().detach()    # convert to numpy array
+    # convert to numpy array
+    image = tensor_image.to("cpu").clone().detach()
     image = image.numpy().squeeze()
-    image = image.transpose(1,2,0)                     # set to correct dimension
-    image = image * var + mean                         # de-normalize the image
-    image = image.clip(0, 1)                           # change the range to plot in numpy
+    # set to correct dimension
+    image = image.transpose(1, 2, 0)
+    # de-normalize the image
+    image = image * var + mean
+    # change the range to plot in numpy
+    image = image.clip(0, 1)
     
     return image
 
@@ -94,21 +105,23 @@ def layer_extract(model, image_tensor, layers=None):
                   '19' : 'conv4_1',
                   '21' : 'conv4_2',
                   '28' : 'conv5_1'}
-    layer_extract= {}
+    extract_layer = {}
     x = image_tensor
-    for label, layer in model._modules.items():
+    for label, layer in model.named_children():
+        # model.named_children()
         x = layer(x)
         if label in layers:
-            layer_extract[layers[label]] = x
+            extract_layer[layers[label]] = x
             
-    return layer_extract  
+    return extract_layer  
 
 def calculate_layer_loss(target_layers, feature_layers, layer_weights, style=False):
 
     ''' Calculate loss of individual layers
     INPUT:
         target_layers - target tensor layers for which the loss to be calculated (type: dictionary)
-        feature_layers - cotent/style tensor layers for which the loss to be calculated (type: dictionary)
+        feature_layers - cotent/style tensor layers for which the loss to be calculated
+                         (type: dictionary)
         layer weights - weight of the individual layers (type: dictionary)
         style - if True calculate gram matrix of the style layer tensors (type: True/False)
     OUTPUT:
@@ -129,4 +142,3 @@ def calculate_layer_loss(target_layers, feature_layers, layer_weights, style=Fal
         loss += layer_weights[layer] * torch.mean((target_layer - feature_layer) **2) / (d * h * w)
         
     return loss
-

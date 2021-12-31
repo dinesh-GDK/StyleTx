@@ -1,11 +1,15 @@
-import torch
-import numpy as np
-from torchvision import models
-from PIL import Image
-from .process import *
-import tqdm
+'''
+Main module for StyleTransfer
+'''
 
-def StyleTransfer(content_img, style_img, alpha=1, beta=10, epochs=500):
+from PIL import Image
+import numpy as np
+import tqdm
+import torch
+from torchvision import models
+from .process import pre_process, denorm_tensor, gram_matrix, layer_extract, calculate_layer_loss
+
+def StyleTransfer(content_img, style_img, alpha=1, beta=10, epochs=2):
     ''' Transfers the style of the image given by the user
     INPUT:
         content_img - the image for which the style transfer is to be applied (type: PIL)
@@ -24,6 +28,8 @@ def StyleTransfer(content_img, style_img, alpha=1, beta=10, epochs=500):
 
     # load the network from the models folder
     model = models.vgg19(pretrained=True).features
+    model.to(device)
+
     # freeze all VGG parameters
     for param in model.parameters():
         param.requires_grad_(False)
@@ -55,14 +61,19 @@ def StyleTransfer(content_img, style_img, alpha=1, beta=10, epochs=500):
     # set the optimizer
     optimizer = torch.optim.Adam([target_tensor], lr=0.01)
 
-    for i in tqdm.tqdm(range(1, epochs+1), desc='Progress'):
+    for _ in tqdm.tqdm(range(1, epochs+1), desc='Progress'):
 
         # extract the layers from the network for the target tensor
         target_layers = layer_extract(model, target_tensor)
 
         # calculate the individual loss for content and style
-        content_layer_loss = calculate_layer_loss(target_layers, content_layers, content_layer_weights)
-        style_layer_loss = calculate_layer_loss(target_layers, style_layers,style_layer_weights, style=True)
+        content_layer_loss = calculate_layer_loss(target_layers,
+                                                  content_layers,
+                                                  content_layer_weights)
+        style_layer_loss = calculate_layer_loss(target_layers,
+                                                style_layers,
+                                                style_layer_weights,
+                                                style=True)
     
         # total loss of the system
         total_loss = alpha * content_layer_loss + beta * style_layer_loss

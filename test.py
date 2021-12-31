@@ -2,8 +2,8 @@ import styletx
 import PIL
 import matplotlib.pyplot as plt
 
-content = PIL.Image.open("./images/space_needle.jpg")
-style = PIL.Image.open("./images/Mona_Lisa.jpg")
+content = PIL.Image.open("./images/Result.png")
+style = PIL.Image.open("./images/Result.png")
 
 content.show()
 style.show()
