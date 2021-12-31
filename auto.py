@@ -8,7 +8,7 @@ ap.add_argument('-k', '--key', type = str, help = 'key')
 ap.add_argument('-p', '--publish', type = str, help = 'test / original')
 args = vars(ap.parse_args())
 
-no_encrypt = ['./master.py']
+filesTo = ['./setup.py']
 
 def create_package(args):
     os.system('rm -rf dist')
@@ -29,7 +29,7 @@ def create_package(args):
     else:
         print('Invalid publish argument | test or main')
         exit()
-    os.system('python setup.py sdist bdist_wheel')
+    os.system('python3 setup.py sdist bdist_wheel')
     os.system(run)
 
 
@@ -39,23 +39,16 @@ def encrypt(args):
         print('Key not provided')
         exit()
 
-    filesTo = []
-
-    for folder, _, files in os.walk('.'):
-        for _file in files:
-            filesTo.append(folder + '/' +  _file)
-
     for fi in filesTo:
-        if fi not in no_encrypt:
-            with open(fi, 'r+') as f:
-                s = f.read().encode('utf-8')
-                f.seek(0)
+        with open(fi, 'r+') as f:
+            s = f.read().encode('utf-8')
+            f.seek(0)
 
-                key = args['key'].encode('utf-8')
-                key = Fernet(key)
-                encrypted_text = key.encrypt(s)
+            key = args['key'].encode('utf-8')
+            key = Fernet(key)
+            encrypted_text = key.encrypt(s)
 
-                f.write(encrypted_text.decode('utf-8'))
+            f.write(encrypted_text.decode('utf-8'))
 
 
 def decrypt(args):
@@ -64,28 +57,20 @@ def decrypt(args):
         print('Key not provided')
         exit()
 
-    filesTo = []
-
-    for folder, _, files in os.walk('.'):
-        for _file in files:
-            filesTo.append(folder + '/' +  _file)
-
     for fi in filesTo:
-        if fi not in no_encrypt:
+        try:
+            with open(fi, 'r+') as f:
+                s = f.read().encode('utf-8')
+                f.seek(0)
 
-            try:
-                with open(fi, 'r+') as f:
-                    s = f.read().encode('utf-8')
-                    f.seek(0)
+                key = args['key'].encode('utf-8')
+                key = Fernet(key)
+                decrypted_text = key.decrypt(s)
 
-                    key = args['key'].encode('utf-8')
-                    key = Fernet(key)
-                    decrypted_text = key.decrypt(s)
-
-                    with open(fi, 'w') as ff:
-                        ff.write(decrypted_text.decode('utf-8'))
-            except:
-                pass
+                with open(fi, 'w') as ff:
+                    ff.write(decrypted_text.decode('utf-8'))
+        except:
+            print("Something went wrong while decrypting")
 
 if __name__ == '__main__':
 

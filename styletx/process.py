@@ -25,7 +25,7 @@ def pre_process(image, max_size=500, shape=None):
         size = shape
         
     mean = np.array(image).mean(axis=(0, 1))/255   # calculate the mean of the image for R, G and B
-    var = np.array(image).std(axis=(0, 1))/255     # calculate the variance of the image for R, G and B
+    var = np.array(image).std(axis=(0, 1))/255     #calculate the variance of the image for R, G and B
 
     # Resize, convert to tensor and normalize the image    
     transform = transforms.Compose([transforms.Resize(size),
@@ -130,6 +130,3 @@ def calculate_layer_loss(target_layers, feature_layers, layer_weights, style=Fal
         
     return loss
 
-def nClose():
-    '''When close button is pressed do nothing'''
-    pass

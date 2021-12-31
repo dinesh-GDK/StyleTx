@@ -55,17 +55,6 @@ High `alpha` value implies that the content image will have more influence on th
 High `beta` value implies that the style image will have more influence on the output image.\
 You can play with these values to get desired output image.
 
-# GUI
-To use GUI version of **StyleTx**, just clone the repository using
-```
-git clone https://github.com/dinesh-GDK/StyleTx.git
-```
-Get into the directory and run
-```
-python3 main.py
-```
-The GUI is intuitive to follow and you can generate your image.
-
 # Example
 ![](https://raw.githubusercontent.com/dinesh-GDK/StyleTx/master/images/Result.png)
 
