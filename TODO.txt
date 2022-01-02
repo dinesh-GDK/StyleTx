@@ -1,0 +1,14 @@
+TODO:
+- Train
+    - set checkpoint
+- Dataset
+    - research dataset (COCO)
+
+DONE
+- Unet
+- test UNet
+- Implement dataloader
+    - three channel lrb split
+- discriminator
+
+for discriminator instead of giving 3 Lab -> 2 ab was given

@@ -108,7 +108,6 @@ def layer_extract(model, image_tensor, layers=None):
     extract_layer = {}
     x = image_tensor
     for label, layer in model.named_children():
-        # model.named_children()
         x = layer(x)
         if label in layers:
             extract_layer[layers[label]] = x

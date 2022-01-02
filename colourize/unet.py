@@ -43,19 +43,10 @@ class UpUnit(nn.Module):
     
     def forward(self, x, y):
         x = self.up(x)
-        x = torch.cat([x, y], 1)  # the dim might create some issues later
+        x = torch.cat([x, y], 1)
         x = self.doubleconv(x)
         
         return x
-
-class OutConv(nn.Module):
-
-    def __init__(self, in_channels, out_channels):
-        super().__init__()
-        self.conv = nn.Conv2d(in_channels, out_channels, kernel_size=1)
-
-    def forward(self, x):
-        return self.conv(x)
 
 class UNet(nn.Module):
     
@@ -72,7 +63,7 @@ class UNet(nn.Module):
         self.up2 = UpUnit(128, 64)
         self.up3 = UpUnit(64, 32)
         self.up4 = UpUnit(32, 16)
-        self.out = OutConv(16, out_channels)
+        self.out = nn.Conv2d(16, out_channels, kernel_size=1)
     
     def forward(self, x):
         

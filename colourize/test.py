@@ -1,9 +1,10 @@
 import glob
 import random
-from PIL import Image
-import numpy as np
-import torch
+import skimage
 import matplotlib.pyplot as plt
+import torch
+
+from dataloader import rgb_to_lab, lab_to_rgb
 
 def test_random_images(model, folder_path, samples):
 
@@ -18,22 +19,18 @@ def test_random_images(model, folder_path, samples):
         
         idx = random.randint(0, len(image_paths)-1)
         
-        image = Image.open(image_paths[idx])
-        image = image.resize((256, 256))
-        image = np.asarray(image) / 255.0
+        image = skimage.io.imread(image_paths[idx])
         
-        image_torch = torch.from_numpy(image)
-        image_torch = image_torch.permute(2, 0, 1)
-        image_torch = torch.unsqueeze(image_torch, 0).float()
-        image_torch = image_torch.to(device)
+        L, ab = rgb_to_lab(image)
         
-        out_torch = model(image_torch)
+        L = L.unsqueeze(0).to(device)
         
-        out_torch = out_torch.squeeze(0).squeeze(0)
-        out = out_torch.cpu().detach().numpy()
+        out = model(L)
+        
+        rgb = lab_to_rgb(L, out)
 
         fig, ax = plt.subplots(1, 2)
         fig.suptitle(f'Sample: {i+1}')
         ax[0].imshow(image)
-        ax[1].imshow(out, cmap='gray')        
+        ax[1].imshow(rgb)        
         plt.show()

@@ -1,11 +1,36 @@
 import os
 import glob
-from PIL import Image
 import numpy as np
+import skimage
 import torch
 from torch.utils.data import Dataset
-import torchvision.transforms.functional as F
-# from torch.utils.data import DataLoader
+
+def rgb_to_lab(image_rgb):
+    
+    image_rgb = image_rgb / 255.0
+    image_rgb = skimage.transform.resize(image_rgb, (256, 256), anti_aliasing=True)    
+    image_lab = skimage.color.rgb2lab(image_rgb)
+    
+    L = np.expand_dims(image_lab[:,:,0], 2)
+    ab = image_lab[:,:,1:]
+    
+    L, ab = torch.from_numpy(L), torch.from_numpy(ab)
+    L, ab = L.float(), ab.float()
+    L, ab = L.permute(2, 0, 1), ab.permute(2, 0, 1)
+    
+    return L, ab
+    
+def lab_to_rgb(L, ab):
+    
+    # L, ab = L.unsqueeze(0), ab.unsqueeze(0)
+    L, ab = L.squeeze(0), ab.squeeze(0)
+    L, ab = L.permute(1, 2, 0), ab.permute(1, 2, 0)
+    L, ab = L.cpu().detach().numpy(), ab.cpu().detach().numpy()
+    
+    Lab = np.concatenate((L, ab), 2)
+    rgb = skimage.color.lab2rgb(Lab)
+    
+    return rgb
 
 class CustomImageDataset(Dataset):
     
@@ -19,26 +44,9 @@ class CustomImageDataset(Dataset):
 
     def __getitem__(self, idx):
         
-        image = Image.open(self.images_path[idx])
-        label = image.copy().convert('L')
+        image = skimage.io.imread(self.images_path[idx])
         
-        image, label = self.prepare(image), self.prepare(label, True)
-        
-        return [image, label]
-        
-    def prepare(self, image, add_dim=False):
-        
-        image = np.asarray(image)
-        
-        if add_dim:
-            image = np.expand_dims(image, 2)
-        
-        image = image / 255.0
-        image = torch.from_numpy(image).float()
-        image = image.permute(2, 0, 1)
-        image = F.resize(image, size=[256, 256])
-        
-        return image
+        return rgb_to_lab(image)
 
 # dataset = CustomImageDataset('./dataset')
 # data_loader = DataLoader(dataset, batch_size=2, shuffle=True)
