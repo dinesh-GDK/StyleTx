@@ -1,8 +1,9 @@
 TODO:
-- Train
-    - set checkpoint
 - Dataset
     - research dataset (COCO)
+- Docstrings and types
+- pylint
+- README change : Installation section
 
 DONE
 - Unet
@@ -10,5 +11,7 @@ DONE
 - Implement dataloader
     - three channel lrb split
 - discriminator
+- Train
+    - set checkpoint
 
 for discriminator instead of giving 3 Lab -> 2 ab was given

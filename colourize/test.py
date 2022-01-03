@@ -21,7 +21,7 @@ def test_random_images(model, folder_path, samples):
         
         image = skimage.io.imread(image_paths[idx])
         
-        L, ab = rgb_to_lab(image)
+        L, _ = rgb_to_lab(image)
         
         L = L.unsqueeze(0).to(device)
         
