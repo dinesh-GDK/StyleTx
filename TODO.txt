@@ -1,7 +1,12 @@
 TODO:
+- train the model
 - Docstrings and types
 - pylint
 - README change : Installation section
+- styleTX change all to numpy from PIL
+- skimage dependancy
+- test script load image using PIL
+- test delete variables work
 
 DONE
 - Unet

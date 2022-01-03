@@ -9,7 +9,8 @@ from classifier import PatchClassifier
 from train import train
 from test import test_random_images
 
-dataset = CustomImageDataset('./dataset')
+# dataset = CustomImageDataset('./dataset')
+dataset = CustomImageDataset('/mnt/c/Users/dines/projects/coco_sample/train_sample')
 data_loader = DataLoader(dataset, batch_size=32, shuffle=True)
 
 generator = UNet(1, 2)
@@ -34,7 +35,7 @@ trained_model = train(generator,
                     criterion1,
                     criterion2,
                     data_loader,
-                    EPOCHS=20,
+                    EPOCHS=1,
                     SAVE_PATH=SAVE_PATH,
                     LOAD_PATH=LOAD_PATH)
 

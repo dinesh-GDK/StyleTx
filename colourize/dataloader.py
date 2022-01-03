@@ -1,6 +1,7 @@
 import os
 import glob
 import numpy as np
+from PIL import Image
 import skimage
 import torch
 from torch.utils.data import Dataset
@@ -44,7 +45,8 @@ class CustomImageDataset(Dataset):
 
     def __getitem__(self, idx):
         
-        image = skimage.io.imread(self.images_path[idx])
+        image = Image.open(self.images_path[idx]).convert("RGB")
+        image = np.asarray(image)
         
         return rgb_to_lab(image)
 
