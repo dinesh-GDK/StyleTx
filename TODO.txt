@@ -1,6 +1,4 @@
 TODO:
-- Dataset
-    - research dataset (COCO)
 - Docstrings and types
 - pylint
 - README change : Installation section
@@ -13,5 +11,8 @@ DONE
 - discriminator
 - Train
     - set checkpoint
+- track errors csv file
+- Dataset
+    - research dataset (COCO)
 
 for discriminator instead of giving 3 Lab -> 2 ab was given

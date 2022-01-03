@@ -1,7 +1,7 @@
-from torch.utils.data import dataloader
+import os
+import csv
 from tqdm import tqdm
 import torch
-import torch.nn as nn
 
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 D_LABEL_TRUE, D_LABEL_FALSE = None, None
@@ -44,6 +44,10 @@ def train(generator,
     SAVE_PATH,
     LOAD_PATH,
     LAMBDA=100.0):
+
+    monitor_loss = open(os.path.join(SAVE_PATH, "loss_metrics.csv"), "w+")
+    csv_writer = csv.writer(monitor_loss)
+    csv_writer.writerow(["S.No", "G Loss", "D Loss"])
 
     print('Training in', DEVICE, '...')
 
@@ -108,6 +112,8 @@ def train(generator,
         running_loss["generator"] /= len(data_loader)
         running_loss["discriminator"] /= len(data_loader)
 
+        csv_writer.writerow([epoch+1, f"{running_loss['generator']:.4f}", f"{running_loss['generator']:.4f}"])
+
         if running_loss["generator"] < EPOCH_LOSS:
             print(f"New best model: Loss imporved from {EPOCH_LOSS:0.4f} to {running_loss['generator']:.4f}")
 
@@ -122,8 +128,10 @@ def train(generator,
                     "discriminator": d_optimizer.state_dict()
                 },
                 "loss": running_loss
-            }, SAVE_PATH)
+            }, os.path.join(SAVE_PATH, "model.pt"))
 
             EPOCH_LOSS = running_loss["generator"]
+
+    monitor_loss.close()
 
     return generator

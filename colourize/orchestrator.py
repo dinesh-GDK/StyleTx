@@ -10,7 +10,7 @@ from train import train
 from test import test_random_images
 
 dataset = CustomImageDataset('./dataset')
-data_loader = DataLoader(dataset, batch_size=6, shuffle=True)
+data_loader = DataLoader(dataset, batch_size=32, shuffle=True)
 
 generator = UNet(1, 2)
 discriminator = PatchClassifier(2, 1)
@@ -24,8 +24,8 @@ criterion2 = nn.L1Loss()
 LOAD_PATH = None
 # LOAD_PATH = "./RESULTS/20220102-185849.pt"
 
-SAVE_PATH = "./RESULTS/" + datetime.now().strftime("%Y%m%d-%H%M%S") + ".pt"
-os.makedirs("./RESULTS", exist_ok=True)
+SAVE_PATH = "./RESULTS/" + datetime.now().strftime("%Y%m%d-%H%M%S")
+os.makedirs(SAVE_PATH, exist_ok=True)
 
 trained_model = train(generator,
                     discriminator,
@@ -38,4 +38,4 @@ trained_model = train(generator,
                     SAVE_PATH=SAVE_PATH,
                     LOAD_PATH=LOAD_PATH)
 
-test_random_images(trained_model, './dataset', 3)
+# test_random_images(trained_model, './dataset', 3)
