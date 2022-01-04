@@ -4,11 +4,10 @@ import numpy as np
 from PIL import Image
 import skimage
 import torch
-from torch.utils.data import Dataset
+from torch.utils.data import Dataset, DataLoader
 
 def rgb_to_lab(image_rgb):
     
-    image_rgb = image_rgb / 255.0
     image_rgb = skimage.transform.resize(image_rgb, (256, 256), anti_aliasing=True)    
     image_lab = skimage.color.rgb2lab(image_rgb)
     
@@ -18,12 +17,17 @@ def rgb_to_lab(image_rgb):
     L, ab = torch.from_numpy(L), torch.from_numpy(ab)
     L, ab = L.float(), ab.float()
     L, ab = L.permute(2, 0, 1), ab.permute(2, 0, 1)
+
+    L = L / 50.0 - 1.0
+    ab = ab / 110.0
     
     return L, ab
     
 def lab_to_rgb(L, ab):
     
     # L, ab = L.unsqueeze(0), ab.unsqueeze(0)
+    L = (L + 1.0) * 50.0
+    ab = ab * 110.0
     L, ab = L.squeeze(0), ab.squeeze(0)
     L, ab = L.permute(1, 2, 0), ab.permute(1, 2, 0)
     L, ab = L.cpu().detach().numpy(), ab.cpu().detach().numpy()

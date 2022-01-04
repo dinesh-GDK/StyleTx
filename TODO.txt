@@ -7,6 +7,7 @@ TODO:
 - skimage dependancy
 - test script load image using PIL
 - test delete variables work
+- check loop for updating tqdm
 
 DONE
 - Unet

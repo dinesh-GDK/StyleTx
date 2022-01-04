@@ -64,6 +64,7 @@ class UNet(nn.Module):
         self.up3 = UpUnit(64, 32)
         self.up4 = UpUnit(32, 16)
         self.out = nn.Conv2d(16, out_channels, kernel_size=1)
+        self.out_ac = nn.Tanh()
     
     def forward(self, x):
         
@@ -77,5 +78,6 @@ class UNet(nn.Module):
         x7 = self.up2(x6, x3)
         x8 = self.up3(x7, x2)
         x9 = self.up4(x8, x1)
+        x9 = self.out(x9)
         
-        return self.out(x9)
+        return self.out_ac(x9)

@@ -1,26 +1,10 @@
 import os
+from datetime import datetime
 import csv
 from tqdm import tqdm
 import torch
 
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
-def load_model(PATH, generator, discriminator, g_optimizer, d_optimizer):
-
-    cp = torch.load(PATH, map_location=DEVICE)
-
-    print(f"Loading model saved at\n \
-            EPOCH: {cp['epoch']}\n \
-            G_LOSS: {cp['loss']['generator']:.4f}\n \
-            D_LOSS: {cp['loss']['discriminator']:.4f}")
-
-    generator.load_state_dict(cp["model"]["generator"])
-    discriminator.load_state_dict(cp["model"]["discriminator"])
-
-    g_optimizer.load_state_dict(cp["optimizer"]["generator"])
-    d_optimizer.load_state_dict(cp["optimizer"]["discriminator"])
-
-    del cp
 
 def train(generator,
     discriminator,
@@ -31,25 +15,22 @@ def train(generator,
     data_loader,
     EPOCHS,
     SAVE_PATH,
-    LOAD_PATH,
     LAMBDA=100.0):
 
     monitor_loss = open(os.path.join(SAVE_PATH, "loss_metrics.csv"), "w+")
     csv_writer = csv.writer(monitor_loss)
-    csv_writer.writerow(["S.No", "G Loss", "D Loss"])
+    csv_writer.writerow(["Epoch", "TIME", "G Loss", "D Loss"])
+    monitor_loss.close()
 
     print('Training in', DEVICE, '...')
-
-    generator = generator.to(DEVICE)
-    discriminator = discriminator.to(DEVICE)
-
-    if LOAD_PATH is not None:
-        load_model(LOAD_PATH, generator, discriminator, g_optimizer, d_optimizer)
 
     generator = generator.train()
     discriminator = discriminator.train()
 
-    EPOCH_LOSS = float("inf")    
+    EPOCH_LOSS = {
+        "generator": float("inf"),    
+        "discriminator": float("inf")    
+    }
 
     for epoch in range(EPOCHS):
     
@@ -109,13 +90,15 @@ def train(generator,
         running_loss["generator"] /= len(data_loader)
         running_loss["discriminator"] /= len(data_loader)
 
-        csv_writer.writerow([epoch+1, f"{running_loss['generator']:.4f}", f"{running_loss['generator']:.4f}"])
-
-        if running_loss["generator"] < EPOCH_LOSS:
-            print(f"New best model: Loss imporved from {EPOCH_LOSS:0.4f} to {running_loss['generator']:.4f}")
+        if running_loss["generator"] < EPOCH_LOSS["generator"] or running_loss["discriminator"] < EPOCH_LOSS["discriminator"]:
+            
+            if running_loss["generator"] < EPOCH_LOSS["generator"]:
+                print(f"New best model: Generator loss imporved from {EPOCH_LOSS['generator']:0.4f} to {running_loss['generator']:.4f}")
+            else:
+                print(f"New best model: Discriminator loss imporved from {EPOCH_LOSS['discriminator']:0.4f} to {running_loss['discriminator']:.4f}")
 
             torch.save({
-                "epoch": epoch,
+                "epoch": epoch+1,
                 "model": {
                     "generator": generator.state_dict(),
                     "discriminator": discriminator.state_dict()
@@ -127,8 +110,13 @@ def train(generator,
                 "loss": running_loss
             }, os.path.join(SAVE_PATH, "model.pt"))
 
-            EPOCH_LOSS = running_loss["generator"]
+            EPOCH_LOSS = running_loss
+        else:
+            print(f"Loss did not improve; Current Loss: {running_loss['generator']:.4f}; Best Loss: {EPOCH_LOSS['generator']:0.4f}")
 
-    monitor_loss.close()
+        monitor_loss = open(os.path.join(SAVE_PATH, "loss_metrics.csv"), "a+")
+        csv_writer = csv.writer(monitor_loss)
+        csv_writer.writerow([epoch+1, datetime.now().strftime("%Y%m%d-%H%M%S"), f"{running_loss['generator']:.4f}", f"{running_loss['discriminator']:.4f}"])
+        monitor_loss.close()
 
     return generator

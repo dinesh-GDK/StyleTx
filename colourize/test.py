@@ -8,8 +8,9 @@ from dataloader import rgb_to_lab, lab_to_rgb
 
 def test_random_images(model, folder_path, samples):
 
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    print('Testing in', device, '...')
+    device = torch.device("cpu")
+    # device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    # print('Testing in', device, '...')
 
     model.eval()
     
