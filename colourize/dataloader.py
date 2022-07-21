@@ -18,10 +18,14 @@ def rgb_to_lab(image_rgb):
     L, ab = L.float(), ab.float()
     L, ab = L.permute(2, 0, 1), ab.permute(2, 0, 1)
 
+    image_lab = torch.from_numpy(image_lab)
+    image_lab = image_lab.float()
+    image_lab = image_lab.permute(2, 0, 1)
+
     L = L / 50.0 - 1.0
     ab = ab / 110.0
     
-    return L, ab
+    return image_lab, L, ab
     
 def lab_to_rgb(L, ab):
     
@@ -42,7 +46,7 @@ class CustomImageDataset(Dataset):
     def __init__(self, folder_path):
         
         folder_path = os.path.normpath(folder_path)
-        self.images_path = glob.glob(folder_path + '/*')
+        self.images_path = sorted(glob.glob(folder_path + '/*'))[:100]
 
     def __len__(self):
         return len(self.images_path)

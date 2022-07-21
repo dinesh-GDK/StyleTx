@@ -5,9 +5,9 @@ TODO:
 - README change : Installation section
 - styleTX change all to numpy from PIL
 - skimage dependancy
-- test script load image using PIL
 - test delete variables work
 - check loop for updating tqdm
+- check discriminator arch again
 
 DONE
 - Unet
@@ -20,5 +20,6 @@ DONE
 - track errors csv file
 - Dataset
     - research dataset (COCO)
+- test script load image using PIL
 
 for discriminator instead of giving 3 Lab -> 2 ab was given

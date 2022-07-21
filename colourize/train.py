@@ -15,7 +15,7 @@ def train(generator,
     data_loader,
     EPOCHS,
     SAVE_PATH,
-    LAMBDA=100.0):
+    LAMBDA):
 
     monitor_loss = open(os.path.join(SAVE_PATH, "loss_metrics.csv"), "w+")
     csv_writer = csv.writer(monitor_loss)
@@ -45,41 +45,42 @@ def train(generator,
 
         for data in data_loader:
             
-            l_L, l_ab = data
-            l_L, l_ab = l_L.to(DEVICE), l_ab.to(DEVICE)
+            Lab, L, ab = data
+            Lab, L, ab = Lab.to(DEVICE), L.to(DEVICE), ab.to(DEVICE)
             
             g_optimizer.zero_grad()
             d_optimizer.zero_grad()
             
-            l_g_output = generator(l_L)
+            g_output = generator(L)
+            g_output = torch.cat([L, g_output], dim=1)
             
             # discriminator
-            l_d_g_image = discriminator(l_g_output.detach())
+            d_g_image = discriminator(g_output.detach())
 
-            l_D_LABEL_TRUE = torch.Tensor([1.0]).expand(l_d_g_image.shape).to(DEVICE)
-            l_D_LABEL_FALSE = torch.Tensor([0.0]).expand(l_d_g_image.shape).to(DEVICE)
+            LABEL_TRUE = torch.Tensor([1.0]).expand(d_g_image.shape).to(DEVICE)
+            LABEL_FALSE = torch.Tensor([0.0]).expand(d_g_image.shape).to(DEVICE)
             
-            l_d_loss1 = criterion1(l_d_g_image, l_D_LABEL_FALSE)
+            d_loss1 = criterion1(d_g_image, LABEL_FALSE)
 
-            l_d_ab = discriminator(l_ab)
-            l_d_loss2 = criterion1(l_d_ab, l_D_LABEL_TRUE)
-            l_d_loss = (l_d_loss1 + l_d_loss2) * 0.5
-            l_d_loss.backward()
+            d_ab = discriminator(Lab)
+            d_loss2 = criterion1(d_ab, LABEL_TRUE)
+            d_loss = (d_loss1 + d_loss2) * 0.5
+            d_loss.backward()
             d_optimizer.step()        
             
             # generator
-            d_g_image = discriminator(l_g_output)
-            l_g_loss1 = criterion1(d_g_image, l_D_LABEL_TRUE)
-            l_g_loss2 = criterion2(l_g_output, l_ab) * LAMBDA
-            l_g_loss = l_g_loss1 + l_g_loss2
-            l_g_loss.backward()
+            d_g_image = discriminator(g_output)
+            g_loss1 = criterion1(d_g_image, LABEL_TRUE)
+            g_loss2 = criterion2(g_output, Lab) * LAMBDA
+            g_loss = g_loss1 + g_loss2
+            g_loss.backward()
             g_optimizer.step()
 
-            running_loss["generator"] += float(l_g_loss / len(data))
-            running_loss["discriminator"] += float(l_d_loss / len(data))
+            running_loss["generator"] += float(g_loss / len(data))
+            running_loss["discriminator"] += float(d_loss / len(data))
 
             pbar.update(1)
-            pbar.set_postfix(G_Loss=f'{(l_g_loss/len(data)):.4f}', D_Loss=f'{(l_d_loss/len(data)):.4f}')
+            pbar.set_postfix(G_Loss=f'{(g_loss/len(data)):.4f}', D_Loss=f'{(d_loss/len(data)):.4f}')
 
             # for variable in dir():
             #     if variable.startswith("l_"):
